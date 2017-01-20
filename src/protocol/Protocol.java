@@ -4,10 +4,15 @@ package protocol;
  * Programming Project module 2 Software Systems 2016-2017
  * Interface Protocol with the made agreements during the practical of 11-01-2017 
  * @author Niek Khasuntsev
- * @version 1.0 (17-01-2017)
+ * @version 1.0.1 (21-01-2017)
  * 
  * Changelog:
  * 
+ * v1.0.1:
+ * 	Added command to request the leaderboard. 
+ * 
+ * v1.0.0:
+ * 	Initial version of the protocol
  * 
  */
 
@@ -335,6 +340,13 @@ public interface Protocol {
 	 * Direction: Server -> Client
 	 */
 	String SERVER_RESULTCHALLENGE = "resultchallenge";
+	
+	/**
+	 * Used by the client to request the leaderboard from the server
+	 *  
+	 * Direction: Client -> Server
+	 */
+	String CLIENT_REQUESTLEADERBOARD = "requestleaderboard";
 	
 	/**
 	 * Used to send the data of the game to the leaderboad
