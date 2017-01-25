@@ -261,7 +261,7 @@ public interface Protocol {
 	 * Same as the above command, but instead of sending a message to the whole lobby.
 	 * It will only send the message to your opponent 
 	 */
-	public static final String CLIENT_SENDWHISPERMESSAGE = "sendmessage";
+	public static final String CLIENT_SENDWHISPERMESSAGE = "sendwhispermessage";
 	
 	/**
 	 * Used to broadcast the message to all the clients that support the chat feature
