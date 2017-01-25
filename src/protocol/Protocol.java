@@ -4,9 +4,16 @@ package protocol;
  * Programming Project module 2 Software Systems 2016-2017
  * Interface Protocol with the made agreements during the practical of 11-01-2017 
  * @author Niek Khasuntsev
- * @version 1.0.1 (21-01-2017)
+ * @version 1.0.2 (25-01-2017)
  * 
  * Changelog:
+ * 
+ * v1.0.2:
+ *  Added standart port number
+ *  Made all strings "public static final" (just to be sure that you cannot override them)
+ * 	Added example to the challengelist command
+ * 	Added commands for whisper messages
+ * 	Changed notifymove to return only x and z, without the y.
  * 
  * v1.0.1:
  * 	Added command to request the leaderboard. 
@@ -26,6 +33,12 @@ public interface Protocol {
 	 */
 	
 	// --------------- Pre game ---------------
+	
+	/**
+	 * Value for the standart port 
+	 */
+	public static final int PORTNUMBER = 1337;
+	
 	
 	/**
 	 * Used for joining a server (or a.k.a. "lobby")
@@ -50,7 +63,7 @@ public interface Protocol {
 	 * 
 	 * Direction: Client -> Server
 	 */
-	String CLIENT_JOINREQUEST = "joinrequest";
+	public static final String CLIENT_JOINREQUEST = "joinrequest";
 	
 	/**
 	 * Used for accepting the client request to join the server  and notify the client of the features that the server supports
@@ -75,7 +88,7 @@ public interface Protocol {
 	 *  
 	 * Direction: Server -> Client
 	 */
-	String SERVER_ACCEPTREQUEST = "acceptrequest";
+	public static final String SERVER_ACCEPTREQUEST = "acceptrequest";
 	
 	/**
 	 * Used to deny the client if the name is already in use 
@@ -93,21 +106,21 @@ public interface Protocol {
 	 *  
 	 * Direction: Server -> Client 
 	 */
-	String SERVER_DENYREQUEST  = "denyrequest";
+	public static final String SERVER_DENYREQUEST  = "denyrequest";
 	
 	/**
 	 * Used to let the server know that the client wants to start a game
 	 * 
 	 * Direction: Client -> Server
 	 */
-	String CLIENT_GAMEREQUEST = "gamerequest";
+	public static final String CLIENT_GAMEREQUEST = "gamerequest";
 	
 	/**
 	 * Used to let the client know that he has to wait for a second client to join the game
 	 * 
 	 * Direction: Server -> Client
 	 */
-	String SERVER_WAITFORCLIENT = "waitforclient";
+	public static final String SERVER_WAITFORCLIENT = "waitforclient";
 	
 	/**
 	 * Used to let the clients know that a game has been started
@@ -123,7 +136,7 @@ public interface Protocol {
 	 * 
 	 * Direction: Server -> Client 
 	 */
-	String SERVER_STARTGAME = "startgame";
+	public static final String SERVER_STARTGAME = "startgame";
 	
 	// --------------- In game ---------------
 	
@@ -140,7 +153,7 @@ public interface Protocol {
 	 *  
 	 * Direction: Server -> Client
 	 */
-	String SERVER_MOVEREQUEST = "moverequest";
+	public static final String SERVER_MOVEREQUEST = "moverequest";
 	
 	/**
 	 * Used by the client to do a move 
@@ -162,7 +175,7 @@ public interface Protocol {
 	 *  
 	 * Direction: Client -> Server
 	 */
-	String CLIENT_SETMOVE = "setmove";
+	public static final String CLIENT_SETMOVE = "setmove";
 	
 	/**
 	 * Used to deny a move if the move is not valid. 
@@ -171,7 +184,7 @@ public interface Protocol {
 	 * 
 	 * Direction: Server -> Client
 	 */
-	String SERVER_DENYMOVE = "denymove";
+	public static final String SERVER_DENYMOVE = "denymove";
 	
 	/** 
 	 * Used to let the clients know that a move has been made
@@ -189,7 +202,7 @@ public interface Protocol {
 	 *  
 	 * Direction: Server -> Client
 	 */
-	String SERVER_NOTIFYMOVE = "notifymove";
+	public static final String SERVER_NOTIFYMOVE = "notifymove";
 	
 	/**
 	 * Used to announce that the game is over 
@@ -203,7 +216,7 @@ public interface Protocol {
 	 * code: "gameover victor
 	 * Direction: Server -> Client		
 	 */
-	String SERVER_GAMEOVER = "gameover";
+	public static final String SERVER_GAMEOVER = "gameover";
 	
 	// --------------- Error ---------------
 	
@@ -219,14 +232,14 @@ public interface Protocol {
 	 * 
 	 * Direction: Server -> Client
 	 */
-	String SERVER_CONNECTIONLOST = "connectionlost";
+	public static final String SERVER_CONNECTIONLOST = "connectionlost";
 	
 	/**
 	 * Used everytime a client tries to perform an invalid command
 	 * 
 	 * Direction: Server -> Client
 	 */
-	String SERVER_INVALIDCOMMAND = "invalidcommand";
+	public static final String SERVER_INVALIDCOMMAND = "invalidcommand";
 	
 	// --------------- Extra features ---------------
 	
@@ -242,7 +255,13 @@ public interface Protocol {
 	 *  
 	 * Direction: Client -> Server
 	 */
-	String CLIENT_SENDMESSAGE = "sendmessage";
+	public static final String CLIENT_SENDMESSAGE = "sendmessage";
+	
+	/**
+	 * Same as the above command, but instead of sending a message to the whole lobby.
+	 * It will only send the message to your opponent 
+	 */
+	public static final String CLIENT_SENDWHISPERMESSAGE = "sendmessage";
 	
 	/**
 	 * Used to broadcast the message to all the clients that support the chat feature
@@ -256,21 +275,31 @@ public interface Protocol {
 	 * 
 	 * Direction: Server -> Client
 	 */
-	String SERVER_BROADCASTMESSAGE = "broadcastmessage";
+	public static final String SERVER_BROADCASTMESSAGE = "broadcastmessage";
+	
+	/**
+	 * Same as the above command, but the message will only be deliverd to the opponent
+	 */
+	public static final String SERVER_BROADCASTWHISPERMESSAGE = "broadcastwhispermessage";
 	
 	/**
 	 * Used to request a list of all the clients that support the challenge feature
 	 * 
 	 * Direction: Client -> Server
 	 */
-	String CLIENT_REQUESTCHALLENGELIST = "requestchallengelist";
+	public static final String CLIENT_REQUESTCHALLENGELIST = "requestchallengelist";
 	
 	/**
 	 * Used to send the clients that support the challenge feature
 	 * 
 	 * Direction: Server -> Client
+	 * 
+	 * Example: 
+	 *  Niek request the challenge list. victor, steen and arthur support the feature
+	 *  
+	 *  code: challengelist victor steen arthur
 	 */
-	String SERVER_CHALLENGELIST = "challengelist";
+	public static final String SERVER_CHALLENGELIST = "challengelist";
 	
 	/**
 	 * Used to send a challenge to the other client
@@ -285,7 +314,7 @@ public interface Protocol {
 	 *  
 	 *  Direction: Client -> Server
 	 */
-	String CLIENT_REQUESTCHALLENGE = "requestchallenge";
+	public static final String CLIENT_REQUESTCHALLENGE = "requestchallenge";
 	
 	/**
 	 * Used to notify the client that someone else is challenging him
@@ -301,7 +330,7 @@ public interface Protocol {
 	 * Direction: Server -> Client
 	 *
 	 */
-	String SERVER_NOTIFYCHALLENGE = "notifychallenge";
+	public static final String SERVER_NOTIFYCHALLENGE = "notifychallenge";
 	
 	/**
 	 * Used by the client that got challenged to answer the challenge
@@ -320,7 +349,7 @@ public interface Protocol {
 	 *
 	 * Direction: Client -> Server
 	 */
-	String CLIENT_ANSWERCHALLENGE = "answerchallenge";
+	public static final String CLIENT_ANSWERCHALLENGE = "answerchallenge";
 	
 	/**
 	 * Used to notify the other client whether the challenge has been accepted or not 
@@ -339,14 +368,14 @@ public interface Protocol {
 	 * 
 	 * Direction: Server -> Client
 	 */
-	String SERVER_RESULTCHALLENGE = "resultchallenge";
+	public static final String SERVER_RESULTCHALLENGE = "resultchallenge";
 	
 	/**
 	 * Used by the client to request the leaderboard from the server
 	 *  
 	 * Direction: Client -> Server
 	 */
-	String CLIENT_REQUESTLEADERBOARD = "requestleaderboard";
+	public static final String CLIENT_REQUESTLEADERBOARD = "requestleaderboard";
 	
 	/**
 	 * Used to send the data of the game to the leaderboad
@@ -367,7 +396,7 @@ public interface Protocol {
 	 * 
 	 * Direction: Client -> Server
 	 */
-	String CLIENT_SETLEADERBOARD = "setleaderboard";
+	public static final String CLIENT_SETLEADERBOARD = "setleaderboard";
 	
 	/**
 	 * Used to broadcast the leaderboard to the clients
@@ -388,6 +417,6 @@ public interface Protocol {
 	 * Direction: Server -> Client
 	 * 
 	 */
-	String SERVER_BROADCASTLEADERBOARD = "broadcastleaderboard";
+	public static final String SERVER_BROADCASTLEADERBOARD = "broadcastleaderboard";
 
 }
